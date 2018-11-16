@@ -165,7 +165,7 @@ class OMS_OutputMap extends OMS_Output
         /* Combined
         /* ======================================== */
 
-        $return .= '
+        $return = '
             <div class="sideBar_ElementHolder sideBar_MapElementHolder">
                 <div class="sideBar_GoogleMapHolder">
                     <div id="googleMapWrapper" class="desktopOnly">
@@ -189,6 +189,7 @@ class OMS_OutputMap extends OMS_Output
         $marker_image = get_field( 'oms_marker', $this->id );
         $zoom_level = (int) get_field( 'oms_zoom_level', $this->id );
         $zoom_level = ( ! empty( $zoom_level ) ) ? $zoom_level : 15;
+        $data_attributes = '';
 
         /* ======================================== */
         /* Marker Image
@@ -396,12 +397,21 @@ class OMS_OutputMap extends OMS_Output
         parent::enqueue_print_scripts();
 
         // SCRIPTS
-        wp_register_script('oms_sw_map_js', $this->plugins_url . '/js/oms-sw-map.js');
+        wp_register_script('oms_sw_map_leaflet', 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.js');
+        wp_enqueue_script('oms_sw_map_leaflet');
+
+        wp_register_script('oms_sw_map_leaflet_esri', 
+                           'https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js',
+                           array( 'oms_sw_map_leaflet'));
+        wp_enqueue_script('oms_sw_map_leaflet_esri');
+
+        wp_register_script('oms_sw_map_js', 
+                           $this->plugins_url . '/js/oms-sw-map.js',
+                           array('oms_sw_map_leaflet', 'oms_sw_map_leaflet_esri'));
         wp_enqueue_script('oms_sw_map_js');
-        wp_register_script('oms_sw_map_google_maps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false');
-        wp_enqueue_script('oms_sw_map_google_maps');
 
         // STYLES
+        wp_enqueue_style('oms_leaflet_css', 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css');
         wp_enqueue_style('oms_sw_map_css', $this->plugins_url . '/css/oms-sw-map.css');
 
     }

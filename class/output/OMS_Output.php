@@ -15,7 +15,7 @@ abstract class OMS_Output {
         $this->id = $id;
 
         // Set path to plugin
-        $this->plugins_url = plugins_url( '/oms-widgets' );
+        $this->plugins_url = plugins_url( '/oms-widgets-2' );
 
         if ( ! is_admin() ) {
             // Enqueue the scripts and styles.
