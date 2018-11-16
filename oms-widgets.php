@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Plugin Name: OMS Persistant Widgets
+ * Plugin Name: OMS Persistant Widgets 2
  * Plugin URI: http://orbitmedia.com
  * Description: This plugin creates persisting sidebar widget content.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Mark Furrow
  * License: GPL2
  */
