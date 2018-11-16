@@ -31,7 +31,7 @@ require_once( dirname(__FILE__) . '/class/output/OMS_OutputImage.php' );
 require_once( dirname(__FILE__) . '/class/output/OMS_OutputVideo.php' );
 // require_once( dirname(__FILE__) . '/class/output/OMS_OutputTestimonial.php' );
 
-add_action( 'widgets_init', create_function( '', 'return register_widget("OMS_Widget");' ) );
+add_action( 'widgets_init', function() { return register_widget("OMS_Widget"); });
 
 /**
  * Create Widget Custom Post Type

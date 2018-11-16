@@ -18,10 +18,10 @@ class OMS_OutputMap extends OMS_Output
     {
 
         // Get widget-specific data
-        $locaton_data = $this->locationData();
+        $location_data = $this->locationData();
 
         // Set array data to object
-        $locaton_data = json_decode(json_encode($locaton_data), FALSE);
+        $location_data = json_decode(json_encode($location_data), FALSE);
 
         // Hold the formatted output.
         $formatted_html = '';
@@ -29,7 +29,7 @@ class OMS_OutputMap extends OMS_Output
         // Hold the index.
         $i = 0;
 
-        foreach( $locaton_data as $v ) {
+        foreach( $location_data as $v ) {
 
             /* ======================================== */
             /* Latitude & Longitude
@@ -38,21 +38,6 @@ class OMS_OutputMap extends OMS_Output
             // Get the latitude and longitude.
             $lat = $v->lat;
             $lng = $v->lng;
-
-            if ( $lat == '0' || empty( $lat ) || $lng == '0' || empty( $lng ) ) {
-
-                // Ask Google to geocode the address for us.
-                $geocoded_lat_lng = $this->geocode_address(
-                    $v->address_1 . ' ' . $v->city . ', ' . $v->state . ', ' . $v->zip_code . ', ' . $v->country
-                );
-
-                if ($geocoded_lat_lng !== false) {
-                    // Use the geocoded latitude and longitude instead.
-                    $lat = $geocoded_lat_lng['lat'];
-                    $lng = $geocoded_lat_lng['lng'];
-                }
-
-            }
 
             // Set the data attributes.
             $instance_attributes = array(
@@ -165,7 +150,7 @@ class OMS_OutputMap extends OMS_Output
         /* Combined
         /* ======================================== */
 
-        $return .= '
+        $return = '
             <div class="sideBar_ElementHolder sideBar_MapElementHolder">
                 <div class="sideBar_GoogleMapHolder">
                     <div id="googleMapWrapper" class="desktopOnly">
@@ -189,6 +174,7 @@ class OMS_OutputMap extends OMS_Output
         $marker_image = get_field( 'oms_marker', $this->id );
         $zoom_level = (int) get_field( 'oms_zoom_level', $this->id );
         $zoom_level = ( ! empty( $zoom_level ) ) ? $zoom_level : 15;
+        $data_attributes = '';
 
         /* ======================================== */
         /* Marker Image
@@ -271,52 +257,8 @@ class OMS_OutputMap extends OMS_Output
         }
 
         return $data;
-
     }
 
-
-    /**
-     * Fetch the latitude and longitude for an address using the (free)
-     * Google Maps API.
-     *
-     * @param string $address
-     * @return array
-     * @author Jimmy K. <jimmy@orbitmedia.com>
-     */
-    protected function geocode_address( $address )
-    {
-
-        if ( ! function_exists( 'file_get_contents' ) ) {
-            // The file_get_contents() function is not enabled.
-            return false;
-        }
-
-        // Hold the Google API URL.
-        $google_api_url = 'http://maps.googleapis.com/maps/api/geocode/xml?address=' . urlencode($address) . '&sensor=false';
-
-        // Ask Google to geocode the address.
-        if ( $xml_response = @file_get_contents( $google_api_url ) ) {
-
-            // Parse the XML response.
-            $xml = new SimpleXMLElement( $xml_response );
-
-            if ( $xml->status == 'OK' ) {
-                // Everything is good!
-                return array(
-                    'lat' => $xml->result->geometry->location->lat,
-                    'lng' => $xml->result->geometry->location->lng,
-                );
-            }
-
-            // Response returned an error.
-            return false;
-
-        }
-
-        // Couldn't read XML response.
-        return false;
-
-    }
 
     /**
      * Format the city, state, and zip.
@@ -396,12 +338,21 @@ class OMS_OutputMap extends OMS_Output
         parent::enqueue_print_scripts();
 
         // SCRIPTS
-        wp_register_script('oms_sw_map_js', $this->plugins_url . '/js/oms-sw-map.js');
+        wp_register_script('oms_sw_map_leaflet', 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.js');
+        wp_enqueue_script('oms_sw_map_leaflet');
+
+        wp_register_script('oms_sw_map_leaflet_esri', 
+                           'https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js',
+                           array( 'oms_sw_map_leaflet'));
+        wp_enqueue_script('oms_sw_map_leaflet_esri');
+
+        wp_register_script('oms_sw_map_js', 
+                           $this->plugins_url . '/js/oms-sw-map.js',
+                           array('oms_sw_map_leaflet', 'oms_sw_map_leaflet_esri'));
         wp_enqueue_script('oms_sw_map_js');
-        wp_register_script('oms_sw_map_google_maps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false');
-        wp_enqueue_script('oms_sw_map_google_maps');
 
         // STYLES
+        wp_enqueue_style('oms_leaflet_css', 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css');
         wp_enqueue_style('oms_sw_map_css', $this->plugins_url . '/css/oms-sw-map.css');
 
     }
