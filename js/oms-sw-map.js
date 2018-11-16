@@ -144,8 +144,17 @@ function oms_sw_map_create_maps()
 
       window.L.esri.basemapLayer('Streets').addTo(map);
 
+      // Get the marker width/height so we can generate coords.
+      var marker_width = 
+        parseInt(data_element.attr('data-marker_image_width'), 10);
+      var marker_height = 
+        parseInt(data_element.attr('data-marker_image_height'), 10);
+
       var marker_icon = window.L.icon({
         iconUrl: data_element.attr('data-marker_image_url'),
+        iconSize: L.point(marker_width, marker_height),
+        iconAnchor: L.point(marker_width / 2, marker_height),
+        popupAnchor: L.point(0, -marker_height),
       });
 
       var lat = jQuery('.sideBar_MapListAddress').length &&
