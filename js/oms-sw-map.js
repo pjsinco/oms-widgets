@@ -131,122 +131,50 @@ function oms_sw_map_remove_fieldset($element) {
 
 function oms_sw_map_create_maps()
 {
-
-  // Check if a map exists on the page.
   if (jQuery('.sideBar_MapElementHolder').length > 0) {
 
     // Loop through each map.
     jQuery('.sideBar_MapElementHolder').each(function() {
-
       // Get the data element.
-      var $data_element = jQuery('.sideBar_GoogleMap', jQuery(this));
+      var data_element = jQuery('.sideBar_GoogleMap', jQuery(this));
 
-      // Get the marker width/height so we can generate coords.
-      var $marker_width = parseInt($data_element.attr('data-marker_image_width'), 10);
-      var $marker_height = parseInt($data_element.attr('data-marker_image_height'), 10);
+      map_element = document.getElementById(data_element.attr('id'));
 
-      // Generate the marker coordinates.
-      var $coords = [
-        0, 0,
-        $marker_width, 0,
-        $marker_width, $marker_height,
-        0, $marker_height
-      ];
+      var map = window.L.map(map_element);
 
-      // Get the map element as a regular JavaScript element.
-      $map_element = document.getElementById($data_element.attr('id'));
+      window.L.esri.basemapLayer('Streets').addTo(map);
 
-      // Set the map options.
-      var $map_options = {
-        scrollwheel: false,
-        zoom: parseInt($data_element.attr('data-zoom_level'), 10),
-        center: new google.maps.LatLng(0, 0),
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        mapTypeControl: false,
-        streetViewControl: true,
-        zoomControl: true,
-        zoomControlOptions: {
-          style: google.maps.ZoomControlStyle.LARGE
-        },
-      };
-
-      // Create the map.
-      var $map = new google.maps.Map(
-        $map_element,
-        $map_options
-      );
-
-      // Create the marker icon.
-      var $marker_icon = {
-        url: $data_element.attr('data-marker_image_url'),
-        size: new google.maps.Size($marker_width, $marker_height),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(Math.ceil($marker_width / 2), $marker_height)
-      };
-
-      // Hold the lat/lng bounds.
-      var $lat_lng_bounds = new google.maps.LatLngBounds();
-
-      jQuery('.sideBar_MapListAddress', jQuery(this)).each(function() {
-
-        // Create the position.
-        var $marker_position = new google.maps.LatLng(jQuery(this).attr('data-lat'), jQuery(this).attr('data-lng'));
-
-        // Extend the bounds.
-        $lat_lng_bounds.extend($marker_position);
-
-        // Create the marker.
-        var $marker = new google.maps.Marker({
-          title: $data_element.attr('data-name'),
-          position: $marker_position,
-          map: $map,
-          icon: $marker_icon,
-          shape: $coords,
-          optimized: false /* Optimized icons get cut off for some reason. */
-        });
-
-        // Create the info window.
-        var $info_window = new google.maps.InfoWindow({
-          content: jQuery(this).html(),
-          maxWidth: 250
-        });
-
-        // Open the info window when markers are clicked.
-        google.maps.event.addListener($marker, 'click', function() {
-          $info_window.open($map, $marker);
-        });
-
-        // Close info windows on map click.
-        google.maps.event.addListener($map, 'click', function() {
-          $info_window.close();
-        });
-
-        // Get the ID of the clickable map address element.
-        var $clickable_element = 'sideBar_ClickableElement_' + jQuery(this).attr('data-map_id');
-
-        if (document.getElementById($clickable_element)) {
-
-          google.maps.event.addDomListener(document.getElementById($clickable_element), 'click', function() {
-
-            // Get the info window HTML.
-            $info_window_html = jQuery(this).closest('.sideBar_MapListAddress').html();
-
-            // Set the content and open the info window.
-            $info_window.setContent($info_window_html);
-            $info_window.open($map, $marker);
-
-          });
-
-        }
-
+      var marker_icon = window.L.icon({
+        iconUrl: data_element.attr('data-marker_image_url'),
       });
 
-      // Update the map center and bounds.
-      $map.setCenter($lat_lng_bounds.getCenter());
-      // $map.fitBounds($lat_lng_bounds);
+      var lat = jQuery('.sideBar_MapListAddress').length &&
+        jQuery('.sideBar_MapListAddress').first().attr('data-lat');
 
+      var lng = jQuery('.sideBar_MapListAddress').length &&
+        jQuery('.sideBar_MapListAddress').first().attr('data-lng');
+
+      // Hold the lat/lng bounds.
+      var lat_lng_bounds = window.L.latLngBounds([window.L.latLng([lat, lng])]);
+
+      jQuery('.sideBar_MapListAddress', jQuery(this)).each(function() {
+        var markerLat = jQuery(this).attr('data-lat');
+        var markerLng = jQuery(this).attr('data-lng');
+              
+        var marker = window.L.marker(window.L.latLng([markerLat, markerLng]),
+          { icon: marker_icon }
+        ).addTo(map)
+          .bindPopup(jQuery(this).html());
+      
+        lat_lng_bounds.extend(window.L.latLng([markerLat, markerLng]));
+      });
+
+      map.fitBounds(lat_lng_bounds);
+      map.setView(lat_lng_bounds.getCenter())
+
+      if (map.getZoom() > 15) {
+        map.setZoom(15);
+      }
     });
-
   }
-
 }
