@@ -170,8 +170,8 @@ function oms_sw_map_create_maps()
         var markerLat = jQuery(this).attr('data-lat');
         var markerLng = jQuery(this).attr('data-lng');
               
-        var marker = window.L.marker(window.L.latLng([markerLat, markerLng]),
-          { icon: marker_icon }
+        var marker = window.L.marker(window.L.latLng([markerLat, markerLng])
+          //{ icon: marker_icon }
         ).addTo(map)
           .bindPopup(jQuery(this).html());
       
@@ -181,8 +181,8 @@ function oms_sw_map_create_maps()
       map.fitBounds(lat_lng_bounds);
       map.setView(lat_lng_bounds.getCenter())
 
-      if (map.getZoom() > 15) {
-        map.setZoom(15);
+      if (map.getZoom() > 12) {
+        map.setZoom(12);
       }
     });
   }
