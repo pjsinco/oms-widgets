@@ -1,0 +1,33 @@
+/**
+ * @file oms-sw-global.scss
+ *
+ * The default CSS for all widgets. This file will be compiled
+ * using a SASS compiler.
+ *
+ * @author Jimmy K. <jimmy@orbitmedia.com>
+ * @link http://www.orbitmedia.com
+ */
+/* line 12, ../scss/oms-sw.scss */
+.sideBar_ElementHolder {
+  margin: 0 0 20px;
+}
+
+/* ======================================== */
+/* Admin UI
+/* ======================================== */
+/* line 22, ../scss/oms-sw.scss */
+.wp-admin #widgets-right .widget label {
+  display: block;
+}
+/* line 26, ../scss/oms-sw.scss */
+.wp-admin #widgets-right .widget .help {
+  color: #999;
+  font-size: 11px;
+  font-style: italic;
+  line-height: normal;
+  margin-top: -8px;
+}
+/* line 34, ../scss/oms-sw.scss */
+.wp-admin #widgets-right .widget .oms_sw_media_select_button {
+  margin-top: 5px !important;
+}

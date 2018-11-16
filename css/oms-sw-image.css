@@ -1,0 +1,21 @@
+/**
+ * @file oms-sw-image.scss
+ *
+ * The default CSS for the image widget. This file will be compiled
+ * using a SASS compiler.
+ *
+ * @author Jimmy K. <jimmy@orbitmedia.com>
+ * @link http://www.orbitmedia.com
+ */
+/* line 14, ../scss/oms-sw-image.scss */
+.sideBar_ImageElementHolder .sideBar_Caption {
+  width: 100%;
+  line-height: normal;
+  margin-top: 15px;
+}
+/* line 20, ../scss/oms-sw-image.scss */
+.sideBar_ImageElementHolder img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

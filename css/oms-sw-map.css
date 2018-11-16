@@ -1,0 +1,82 @@
+/**
+ * @file oms-sw-map.scss
+ *
+ * The default CSS for the map widget. This file will be compiled
+ * using a SASS compiler.
+ *
+ * @author Jimmy K. <jimmy@orbitmedia.com>
+ * @link http://www.orbitmedia.com
+ */
+/* ======================================== */
+/* Admin UI
+/* ======================================== */
+/* line 18, ../scss/oms-sw-map.scss */
+.oms-sw-map-form-container p.json {
+  display: none;
+}
+/* line 25, ../scss/oms-sw-map.scss */
+.oms-sw-map-form-container .oms-sw-map-repeatable-container fieldset {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  margin: 0 0 10px;
+  padding: 10px;
+}
+/* line 32, ../scss/oms-sw-map.scss */
+.oms-sw-map-form-container .oms-sw-map-repeatable-container fieldset legend {
+  padding: 0 5px;
+  font-weight: bold;
+  margin: 0 0 0 -5px;
+}
+/* line 38, ../scss/oms-sw-map.scss */
+.oms-sw-map-form-container .oms-sw-map-repeatable-container fieldset p:first-of-type {
+  margin-top: 0;
+}
+/* line 46, ../scss/oms-sw-map.scss */
+.oms-sw-map-form-container .oms-sw-map-repeatable-container .repeatable.original p:last-of-type {
+  margin-bottom: 0;
+}
+/* line 50, ../scss/oms-sw-map.scss */
+.oms-sw-map-form-container .oms-sw-map-repeatable-container .repeatable.original .oms-sw-map-remove-location {
+  display: none;
+}
+/* line 59, ../scss/oms-sw-map.scss */
+.oms-sw-map-form-container .oms-sw-map-add-location {
+  margin: 0 0 10px !important;
+}
+
+/* ======================================== */
+/* Output
+/* ======================================== */
+/* line 69, ../scss/oms-sw-map.scss */
+.sideBar_MapElementHolder {
+  /* Map */
+  /* Directions Button */
+  /* Address */
+  /* Address Elements */
+  /* Info Window */
+}
+/* line 73, ../scss/oms-sw-map.scss */
+.sideBar_MapElementHolder .sideBar_GoogleMap {
+  background: #e0e0e0;
+  width: 100% !important;
+  height: 300px !important;
+}
+/* line 81, ../scss/oms-sw-map.scss */
+.sideBar_MapElementHolder .directionsButton {
+  display: none;
+}
+/* line 87, ../scss/oms-sw-map.scss */
+.sideBar_MapElementHolder .sideBar_MapListAddress {
+  line-height: normal;
+  margin-top: 15px;
+}
+/* line 100, ../scss/oms-sw-map.scss */
+.sideBar_MapElementHolder .gm-style-iw {
+  color: #000;
+  line-height: normal;
+}
+/* line 105, ../scss/oms-sw-map.scss */
+.sideBar_MapElementHolder .gm-style-iw .sideBar_MapAddressElement {
+  color: inherit;
+  margin: 0;
+}

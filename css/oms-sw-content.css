@@ -1,0 +1,15 @@
+/**
+ * @file oms-sw-content.scss
+ *
+ * The default CSS for the content widget. This file will be compiled
+ * using a SASS compiler.
+ *
+ * @author Jimmy K. <jimmy@orbitmedia.com>
+ * @link http://www.orbitmedia.com
+ */
+/* line 14, ../scss/oms-sw-content.scss */
+.sideBar_ContentElementHolder .sideBar_ContentHolder {
+  background: #f0f0f0;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 18px 20px;
+}
