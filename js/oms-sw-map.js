@@ -21,6 +21,7 @@ jQuery(document).ready(function($e) {
 
   }, 1000);
 
+  oms_sw_map_create_maps();
 });
 
 /* ======================================== */
