@@ -27,7 +27,7 @@
         oms_sw_init_media_buttons();
 
         // Initialize the Google maps.
-        oms_sw_map_create_maps();
+        //oms_sw_map_create_maps();
 
         // Initialize SolarBox
         oms_sw_init_solarBox();
