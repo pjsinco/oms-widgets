@@ -170,8 +170,8 @@ function oms_sw_map_create_maps()
         var markerLat = jQuery(this).attr('data-lat');
         var markerLng = jQuery(this).attr('data-lng');
               
-        var marker = window.L.marker(window.L.latLng([markerLat, markerLng])
-          //{ icon: marker_icon }
+        var marker = window.L.marker(window.L.latLng([markerLat, markerLng]),
+          { icon: marker_icon }
         ).addTo(map)
           .bindPopup(jQuery(this).html());
       
